@@ -5,12 +5,12 @@
 // of this extension restores reasoning.
 //
 // Usage:
-//   BIFROST_BASE_URL=http://<bifrost-host>/v1 \
+//   BIFROST_BASE_URL=<gateway-base>/v1 \
 //   BIFROST_API_KEY=sk-... \
 //   node scripts/verify-fix.mjs
 //
 // Env:
-//   BIFROST_BASE_URL  (default http://<bifrost-host>/v1)
+//   BIFROST_BASE_URL  (required, e.g. http://<bifrost-host>/v1)
 //   BIFROST_API_KEY   (required)
 //   BIFROST_MODEL     (default deepseek/deepseek-v4-flash)
 
@@ -86,12 +86,12 @@ function fixInlet(payload) {
 }
 // --- end mirror ---
 
-const BASE = process.env.BIFROST_BASE_URL ?? "http://<bifrost-host>/v1";
+const BASE = process.env.BIFROST_BASE_URL;
 const KEY = process.env.BIFROST_API_KEY;
 const MODEL = process.env.BIFROST_MODEL ?? "deepseek/deepseek-v4-flash";
 
-if (!KEY) {
-	console.error("BIFROST_API_KEY is required");
+if (!BASE || !KEY) {
+	console.error("BIFROST_BASE_URL and BIFROST_API_KEY are required");
 	process.exit(1);
 }
 
