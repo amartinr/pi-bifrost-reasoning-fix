@@ -119,14 +119,11 @@ with a warning.
 }
 ```
 
-| Key                            | Type      | Default  | Description                                                             |
-|--------------------------------|-----------|----------|-------------------------------------------------------------------------|
-| `models`                       | string[]  | `[]`     | Model IDs (or ID prefixes). Empty applies the fix to every request that  |
-|                                |           |          | carries Bifrost residue.                                                |
-| `forceReasoningContentOnTools` | boolean   | `true`   | Ensure every assistant message carries `reasoning_content` whenever the    |
-|                                |           |          | history contains a tool call (or the request sends `tools`), so DeepSeek   |
-|                                |           |          | keeps reasoning. Applies even when `tools` is absent from the payload.      |
-| `logLevel`                     | string    | `"off"`  | `off` / `error` / `info` diagnostics to stderr.                          |
+| Key                            | Type      | Default  | Description                                                                                                                    |
+|--------------------------------|-----------|----------|---------------------------------------------------------------------------------------------------------------------------------|
+| `models`                       | string[]  | `[]`     | Model IDs (or ID prefixes). Empty applies the fix to every request that carries Bifrost residue.                               |
+| `forceReasoningContentOnTools` | boolean   | `true`   | Ensure every assistant message carries `reasoning_content` when the history has a tool call (applies even without `tools`).     |
+| `logLevel`                     | string    | `"off"`  | `off` / `error` / `info` diagnostics to stderr.                                                                                   |
 
 ## Authentication & credentials
 
