@@ -1,10 +1,15 @@
 # Dependencies
 node_modules/
+
+# Always ignore the lockfile for published packages; consumers resolve versions.
 package-lock.json
 
-# Build output
+# Build output (built fresh by prepublish; npm publish uses files:["dist"])
 dist/
 build/
+
+# TypeScript incremental build cache
+*.tsbuildinfo
 
 # Logs
 *.log
@@ -13,6 +18,11 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+
+# Local npm / auth
+.npmrc
+.npmrc.*
+npm-auth.token
 
 # Environment variables
 .env
@@ -37,6 +47,3 @@ coverage/
 # Cache
 .cache/
 .pnp/
-
-# pi-coding-agent cache
-.pi/cache/
