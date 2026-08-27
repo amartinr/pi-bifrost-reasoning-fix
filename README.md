@@ -169,8 +169,17 @@ runs the build so `dist/` is always current.
 
 ## Related
 
-- `filters/bifrost_reasoning_content_fix` (open-webui-extensions) — the same
-  normalization for the Open WebUI → Bifrost path.
+- [`filters/bifrost_reasoning_content_fix`](https://github.com/amartinr/open-webui-extensions/tree/main/filters/bifrost_reasoning_content_fix)
+  — same normalization for the Open WebUI → Bifrost path.
+- [`pipes/agent_loop_guard`](https://github.com/amartinr/open-webui-extensions/tree/main/pipes/agent_loop_guard)
+  — robust SSE forwarding for Bifrost's non-standard stream.
+- Upstream Bifrost issues:
+  - [maximhq/bifrost#5325](https://github.com/maximhq/bifrost/issues/5325) —
+    reasoning emitted in non-standard fields.
+  - [maximhq/bifrost#974](https://github.com/maximhq/bifrost/issues/974) —
+    streaming `delta.reasoning` dropped for some providers.
+  - [maximhq/bifrost#6523](https://github.com/maximhq/bifrost/issues/6523) —
+    opening role-only SSE chunks dropped.
 
 ## License
 
