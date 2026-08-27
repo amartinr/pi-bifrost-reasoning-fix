@@ -11,11 +11,14 @@ Bifrost relays DeepSeek reasoning in non-standard fields instead of the OpenAI
 - streaming: `delta.reasoning` / `delta.reasoning_details`
 - messages:  `reasoning` / `reasoning_details`
 
-When a request carries `tools`, DeepSeek requires the assistant
-`reasoning_content` to be passed back on every subsequent request. Bifrost does
-not re-expose it, so the replayed history reaches Bifrost with
-`reasoning_details` and DeepSeek stops reasoning on the next tool-calling turn
-(and may return an HTTP 400).
+In a tool-calling context DeepSeek requires every assistant message to carry
+`reasoning_content`, and it derives that requirement from the **history**
+(once an assistant has produced a `tool_calls`), not from whether the current
+request still ships `tools` — pi often re-sends the history after a tool call
+without `tools` in the payload, and DeepSeek still drops reasoning (and may
+return an HTTP 400). Bifrost does not re-expose `reasoning_content`, so the
+replayed history reaches Bifrost with `reasoning` / `reasoning_details` and
+DeepSeek stops reasoning on the next tool-calling turn.
 
 ## How it works
 
@@ -24,8 +27,14 @@ payload before it is sent:
 
 1. Moves assistant `reasoning` / `reasoning_details` text into
    `reasoning_content`.
-2. In tool-calling requests, guarantees every assistant message carries a
-   `reasoning_content` field, so DeepSeek keeps reasoning.
+2. Whenever the history *contains* a tool call (or the request carries
+   `tools`), guarantees **every** assistant message carries a
+   `reasoning_content` field (empty if none yet), so DeepSeek keeps reasoning.
+
+The rewrite is deterministic and stable across requests, so it does not
+invalidate a stable prefix for the provider's prefix cache: a given assistant
+message always serializes the same way once tool-calling is in scope, and
+user/system/tool messages are never touched (see `src/index.ts`).
 
 The rewrite is content-driven (`reasoning` / `reasoning_details` present) and
 gated on the model id (`deepseek/*`), so non-Bifrost providers are untouched.
@@ -114,8 +123,9 @@ with a warning.
 |--------------------------------|-----------|----------|-------------------------------------------------------------------------|
 | `models`                       | string[]  | `[]`     | Model IDs (or ID prefixes). Empty applies the fix to every request that  |
 |                                |           |          | carries Bifrost residue.                                                |
-| `forceReasoningContentOnTools` | boolean   | `true`   | Add an empty `reasoning_content` to assistant messages in tool-calling   |
-|                                |           |          | requests so DeepSeek keeps reasoning.                                    |
+| `forceReasoningContentOnTools` | boolean   | `true`   | Ensure every assistant message carries `reasoning_content` whenever the    |
+|                                |           |          | history contains a tool call (or the request sends `tools`), so DeepSeek   |
+|                                |           |          | keeps reasoning. Applies even when `tools` is absent from the payload.      |
 | `logLevel`                     | string    | `"off"`  | `off` / `error` / `info` diagnostics to stderr.                          |
 
 ## Authentication & credentials

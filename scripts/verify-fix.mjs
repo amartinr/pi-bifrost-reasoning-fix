@@ -61,9 +61,12 @@ function normalizeAssistant(msg) {
 	delete msg.reasoning_details;
 }
 
+// Detect tool-calling from *history content* (a prior assistant carried
+// tool_calls) as well as from `tools` in this request. DeepSeek drops reasoning
+// when a tool-calling history is replayed without `reasoning_content` on every
+// assistant, even when `tools` is absent from the current payload.
 function fixInlet(payload) {
 	if (!payload || !Array.isArray(payload.messages)) return payload;
-	const hasTools = Array.isArray(payload.tools) && payload.tools.length > 0;
 	let touched = false;
 	for (const msg of payload.messages) {
 		if (!msg || msg.role !== "assistant") continue;
@@ -72,7 +75,13 @@ function fixInlet(payload) {
 			touched = true;
 		}
 	}
-	if (hasTools && !touched) {
+	const hasTools = Array.isArray(payload.tools) && payload.tools.length > 0;
+	const historyHasToolCalls = payload.messages.some(
+		(m) =>
+			m && m.role === "assistant" &&
+			Array.isArray(m.tool_calls) && m.tool_calls.length > 0
+	);
+	if (hasTools || historyHasToolCalls) {
 		for (const msg of payload.messages) {
 			if (msg && msg.role === "assistant") {
 				if (typeof msg.reasoning_content !== "string") {
@@ -186,10 +195,22 @@ const fixed = fixInlet({
 	messages: structuredClone(broken.messages),
 });
 
+// pi often re-sends history after a tool call WITHOUT `tools` in the payload.
+// DeepSeek still drops reasoning in that case unless every assistant carries
+// `reasoning_content`. This is the exact regression reported: first turn
+// reasons, but reasoning stops once a tool call is in the history.
+const noToolsFixed = fixInlet({
+	model: MODEL,
+	thinking: { type: "enabled" },
+	reasoning_effort: "high",
+	messages: structuredClone(broken.messages),
+});
+
 console.log(`== ${MODEL} @ ${BASE} ==`);
 for (const [label, payload, expectReasoning] of [
 	["without-fix (reasoning_details)", broken, 0],
 	["with-fix (reasoning_content)", fixed, 1],
+	["with-fix, tools absent in payload (regression case)", noToolsFixed, 1],
 ]) {
 	const { status, reasoning } = await countReasoning(payload);
 	const ok =

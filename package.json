@@ -12,7 +12,8 @@
     "build": "tsc",
     "clean": "rm -rf dist",
     "typecheck": "tsc --noEmit",
-    "verify": "node scripts/verify-fix.mjs"
+    "verify": "node scripts/verify-fix.mjs",
+    "test": "node --test test/normalize.test.mjs"
   },
   "peerDependencies": {
     "@earendil-works/pi-coding-agent": "*"
