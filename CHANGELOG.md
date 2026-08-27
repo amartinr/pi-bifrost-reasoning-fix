@@ -10,6 +10,8 @@ All notable changes to this project are documented in this file.
   in `reasoning_content` instead of the non-standard Bifrost fields
   (`reasoning` / `reasoning_details`). Restores DeepSeek reasoning on
   tool-calling turns.
+- Loaded from source (`src/index.ts`) so the package installs from git without
+  committing a `dist/` build.
 - JSON configuration file (`config.json`) in the pi-searxng style at
   `~/.pi/agent/extensions/pi-bifrost-reasoning-fix/config.json`, with
   `models`, `forceReasoningContentOnTools`, and `logLevel` options.

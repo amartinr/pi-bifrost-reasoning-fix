@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "description": "Pi extension that fixes the DeepSeek-behind-Bifrost reasoning drop on tool-calling turns. Bifrost relays DeepSeek reasoning in non-standard fields (reasoning / reasoning_details instead of reasoning_content); in tool-calling contexts DeepSeek requires reasoning_content to be passed back, so Bifrost stops reasoning once the history contains tool calls. This extension normalizes the provider request payload (inlet) and handles the non-standard SSE stream (outlet).",
   "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
   "files": [
-    "dist"
+    "src"
   ],
   "scripts": {
     "build": "tsc",
@@ -26,7 +26,7 @@
   },
   "pi": {
     "extensions": [
-      "./dist/index.js"
+      "./src/index.ts"
     ]
   },
   "repository": {
