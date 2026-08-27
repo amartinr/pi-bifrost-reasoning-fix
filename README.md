@@ -104,6 +104,7 @@ with a warning.
 
 ```json
 {
+  "baseUrl": "http://<bifrost-host>/v1",
   "models": ["deepseek/deepseek-v4-flash", "deepseek/deepseek-v4-pro"],
   "forceReasoningContentOnTools": true,
   "logLevel": "off"
@@ -112,7 +113,10 @@ with a warning.
 
 | Key                        | Type   | Default | Description                                                            |
 |----------------------------|--------|---------|------------------------------------------------------------------------|
+| `baseUrl`                  | string | `""`   | Bifrost gateway base URL (OpenAI-compatible `/v1`) — informational;      |
+|                            |        |         | used by tooling and diagnostics. Falls back to `BIFROST_BASE_URL`.       |
 | `models`                   | string[] | `[]`  | Model IDs (or ID prefixes). Empty applies the fix to every request      |
+|                            | absent |         | that carries Bifrost residue.                                           |
 |                            | absent |         | that carries Bifrost residue.                                           |
 | `forceReasoningContentOnTools` | bool | `true` | Add an empty `reasoning_content` to assistant messages in tool-calling   |
 |                            |        |         | requests so DeepSeek keeps reasoning.                                    |
