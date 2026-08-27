@@ -110,14 +110,13 @@ with a warning.
 }
 ```
 
-| Key                        | Type   | Default | Description                                                            |
-|----------------------------|--------|---------|------------------------------------------------------------------------|
-| `models`                   | string[] | `[]`  | Model IDs (or ID prefixes). Empty applies the fix to every request      |
-|                            | absent |         | that carries Bifrost residue.                                           |
-|                            | absent |         | that carries Bifrost residue.                                           |
-| `forceReasoningContentOnTools` | bool | `true` | Add an empty `reasoning_content` to assistant messages in tool-calling   |
-|                            |        |         | requests so DeepSeek keeps reasoning.                                    |
-| `logLevel`                 | string | `"off"` | `off` / `error` / `info` diagnostics to stderr.                          |
+| Key                            | Type      | Default  | Description                                                             |
+|--------------------------------|-----------|----------|-------------------------------------------------------------------------|
+| `models`                       | string[]  | `[]`     | Model IDs (or ID prefixes). Empty applies the fix to every request that  |
+|                                |           |          | carries Bifrost residue.                                                |
+| `forceReasoningContentOnTools` | boolean   | `true`   | Add an empty `reasoning_content` to assistant messages in tool-calling   |
+|                                |           |          | requests so DeepSeek keeps reasoning.                                    |
+| `logLevel`                     | string    | `"off"`  | `off` / `error` / `info` diagnostics to stderr.                          |
 
 ## Authentication & credentials
 
