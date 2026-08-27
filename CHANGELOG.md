@@ -2,6 +2,17 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.2.2] - 2026-08-27
+
+### Changed
+
+- README rewritten in a professional, non-narrative style. Clarifies that
+  model gating is configuration-driven, not hardcoded to `deepseek/*`: with no
+  `config.json` (or an empty `models` list) the fix applies to every request,
+  including the `reasoning_content` forcing on any tool-calling payload. New
+  *Scope of application* section; renamed sections (Problem, Mechanism,
+  Streaming, Credentials, Installation, Publishing, References).
+
 ## [0.2.1] - 2026-08-27
 
 ### Fixed
