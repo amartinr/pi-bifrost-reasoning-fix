@@ -1,0 +1,53 @@
+{
+  "name": "@amartinr/pi-bifrost-reasoning-fix",
+  "version": "0.1.0",
+  "description": "Pi extension that fixes the DeepSeek-behind-Bifrost reasoning drop on tool-calling turns. Bifrost relays DeepSeek reasoning in non-standard fields (reasoning / reasoning_details instead of reasoning_content); in tool-calling contexts DeepSeek requires reasoning_content to be passed back, so Bifrost stops reasoning once the history contains tool calls. This extension normalizes the provider request payload (inlet) and handles the non-standard SSE stream (outlet).",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run build",
+    "prepublish": "npm run clean && npm run build",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*"
+  },
+  "devDependencies": {
+    "@earendil-works/pi-coding-agent": "^0.84.3",
+    "@types/node": "^20.19.43",
+    "typescript": "^5.9.3"
+  },
+  "pi": {
+    "extensions": [
+      "./dist/index.js"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amartinr/pi-bifrost-reasoning-fix.git"
+  },
+  "keywords": [
+    "pi-extension",
+    "pi-package",
+    "pi",
+    "bifrost",
+    "deepseek",
+    "reasoning",
+    "tool-calls",
+    "sse"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "author": "A. Martin <abel.martin.ruiz@gmail.com>",
+  "publishConfig": {
+    "access": "public"
+  }
+}
