@@ -122,6 +122,21 @@ with a warning.
 |                            |        |         | requests so DeepSeek keeps reasoning.                                    |
 | `logLevel`                 | string | `"off"` | `off` / `error` / `info` diagnostics to stderr.                          |
 
+## Authentication & credentials
+
+This extension does not send requests to Bifrost. It rewrites the provider
+payload in memory; pi itself performs the authenticated HTTP call using the
+`apiKey` and `headers` declared in `models.json`. The extension therefore
+never sees or forwards credentials, and no secret belongs in its config file.
+
+- `baseUrl` in `config.json` is informational (tooling/diagnostics), not used
+  to open a connection.
+- Never store an API key in the extension config file; keep it in
+  `models.json` (or the environment) as pi expects.
+- If the extension ever calls Bifrost directly, use a configurable auth header
+  (like `GATEWAY_AUTH_HEADER`/`GATEWAY_AUTH_VALUE`) rather than a hardcoded
+  secret.
+
 ## Install
 
 Add to your Pi environment (placed in `~/.pi/agent/extensions/` for global
