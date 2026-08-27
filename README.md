@@ -75,7 +75,8 @@ needs a Bifrost provider whose models declare `reasoning: true` and a sensible
             "low": "low",
             "medium": null,
             "high": "high",
-            "xhigh": "max"
+            "xhigh": null,
+            "max": "max"
           },
           "input": ["text"],
           "contextWindow": 1000000,
@@ -93,9 +94,12 @@ Notes:
   never commit it — the key shown here is a placeholder.
 - `supportsReasoningEffort: true` lets pi forward the reasoning level from the
   toggle.
-- `thinkingLevelMap.low` maps to the `low` effort level DeepSeek supports so the
-  toggle exposes all three levels (`low`, `high`, `max`). Omitted intermediate
-  levels (`minimal`, `medium`) stay hidden.
+- `thinkingLevelMap` exposes DeepSeek's three official effort levels
+  (`low`, `high`, `max`) using exactly those values, so only `reasoning_effort`
+  values DeepSeek documents are ever sent. The intermediate pi levels
+  (`minimal`, `medium`, `xhigh`) map to `null` (hidden). This avoids sending
+  `medium`/`xhigh` — which DeepSeek silently re-maps to `high` and a strict
+  gateway like Bifrost may reject.
 - Any custom gateway headers (`bifrost.headers`) are deployment-specific; keep
   them out of public documentation.
 
