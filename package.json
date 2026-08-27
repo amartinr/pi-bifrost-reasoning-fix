@@ -1,6 +1,6 @@
 {
   "name": "@amartinr/pi-bifrost-reasoning-fix",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Pi extension that fixes the DeepSeek-behind-Bifrost reasoning drop on tool-calling turns. Bifrost relays DeepSeek reasoning in non-standard fields (reasoning / reasoning_details instead of reasoning_content); in tool-calling contexts DeepSeek requires reasoning_content to be passed back, so Bifrost stops reasoning once the history contains tool calls. This extension normalizes the provider request payload (inlet) so replayed history carries DeepSeek's reasoning_content.",
   "type": "module",
   "main": "./dist/index.js",

@@ -170,9 +170,9 @@ runs the build so `dist/` is always current.
 
 ## Related
 
-- [`filters/bifrost_reasoning_content_fix`](https://github.com/amartinr/open-webui-extensions/tree/main/filters/bifrost_reasoning_content_fix)
+- [`filters/bifrost_reasoning_content_fix`](https://github.com/amartinr/open-webui-extensions/tree/master/filters/bifrost_reasoning_content_fix)
   — same normalization for the Open WebUI → Bifrost path.
-- [`pipes/agent_loop_guard`](https://github.com/amartinr/open-webui-extensions/tree/main/pipes/agent_loop_guard)
+- [`pipes/agent_loop_guard`](https://github.com/amartinr/open-webui-extensions/tree/master/pipes/agent_loop_guard)
   — robust SSE forwarding for Bifrost's non-standard stream.
 - Upstream Bifrost issues:
   - [maximhq/bifrost#5325](https://github.com/maximhq/bifrost/issues/5325) —

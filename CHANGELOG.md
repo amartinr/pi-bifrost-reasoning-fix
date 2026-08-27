@@ -2,6 +2,14 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.2.1] - 2026-08-27
+
+### Fixed
+
+- Broken links in the README's *Related* section: `open-webui-extensions`
+  uses the `master` branch, but the links pointed at `tree/main`, returning
+  404.
+
 ## [0.2.0] - 2026-08-27
 
 ### Fixed
