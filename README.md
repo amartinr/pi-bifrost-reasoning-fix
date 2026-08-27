@@ -30,6 +30,14 @@ payload before it is sent:
 The rewrite is content-driven (`reasoning` / `reasoning_details` present) and
 gated on the model id (`deepseek/*`), so non-Bifrost providers are untouched.
 
+## SSE (outlet)
+
+`after_provider_response` is a no-op by design. Pi reads streaming reasoning
+via the OpenAI SDK, which parses `delta.reasoning` / `delta.reasoning_details`
+and tolerates SSE comments (`: heartbeat`) and `data: [DONE]`. The drop occurs
+only when history is replayed on the inbound (request) side, which is what this
+fixes. No stream rewriting is required on the Pi path.
+
 ## Install
 
 Add to your Pi environment (placed in `~/.pi/agent/extensions/` for global
