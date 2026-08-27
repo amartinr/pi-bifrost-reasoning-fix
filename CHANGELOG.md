@@ -2,7 +2,7 @@
 
 All notable changes to this project are documented in this file.
 
-## [Unreleased]
+## [0.2.0] - 2026-08-27
 
 ### Fixed
 
@@ -17,6 +17,19 @@ All notable changes to this project are documented in this file.
   (`src/normalize.ts`), with `test/normalize.test.mjs` covering the regression
   case and the prefix-cache stability/idempotency guarantee. Unit tests are
   runnable via `npm test`.
+
+### Added
+
+- Published to npm as `@amartinr/pi-bifrost-reasoning-fix`. Ships a compiled
+  `dist/` (ESM + type declarations); `main`, `types` and `pi.extensions` now
+  point at `dist/index.js`. `prepublishOnly` builds `dist/` before publish so
+  the tarball is always current.
+- README documents installing from npm (`pi install
+  npm:@amartinr/pi-bifrost-reasoning-fix`).
+- Documented `thinkingLevelMap` using only DeepSeek's official effort levels
+  (`low`, `high`, `max`); the intermediate pi levels (`minimal`, `medium`,
+  `xhigh`) map to `null`. Only `reasoning_effort` values DeepSeek documents are
+  ever sent.
 
 ## [0.1.0] - 2026-08-27
 

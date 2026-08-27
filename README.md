@@ -144,25 +144,15 @@ never sees or forwards credentials, and no secret belongs in its config file.
 
 ## Install
 
-The package is not yet published to npm. Install it from source:
-
-Clone the repository (or copy it) into Pi's global extension directory:
+The package is published to npm. Install it as a pi package:
 
 ```bash
-mkdir -p ~/.pi/agent/extensions
-cd ~/.pi/agent/extensions
-# clone from GitHub
-#   git clone git@github.com:amartinr/pi-bifrost-reasoning-fix.git
-# or copy an existing checkout into place:
-#   cp -r /path/to/pi-bifrost-reasoning-fix .
-
-cd pi-bifrost-reasoning-fix
-npm install
-npm run build
+pi install npm:@amartinr/pi-bifrost-reasoning-fix
 ```
 
-Then reload Pi (`/reload`) so the extension is auto-discovered. Optionally
-place a `config.json` in the extension's config path (see
+or add it to `packages` in `~/.pi/agent/settings.json` and reload Pi
+(`/reload`) so the extension is auto-discovered. Optionally place a
+`config.json` in the extension's config path (see
 [Configuration](#configuration)).
 
 ## Development

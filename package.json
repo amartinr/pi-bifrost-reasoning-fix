@@ -1,15 +1,16 @@
 {
   "name": "@amartinr/pi-bifrost-reasoning-fix",
-  "version": "0.1.0",
-  "description": "Pi extension that fixes the DeepSeek-behind-Bifrost reasoning drop on tool-calling turns. Bifrost relays DeepSeek reasoning in non-standard fields (reasoning / reasoning_details instead of reasoning_content); in tool-calling contexts DeepSeek requires reasoning_content to be passed back, so Bifrost stops reasoning once the history contains tool calls. This extension normalizes the provider request payload (inlet) and handles the non-standard SSE stream (outlet).",
+  "version": "0.2.0",
+  "description": "Pi extension that fixes the DeepSeek-behind-Bifrost reasoning drop on tool-calling turns. Bifrost relays DeepSeek reasoning in non-standard fields (reasoning / reasoning_details instead of reasoning_content); in tool-calling contexts DeepSeek requires reasoning_content to be passed back, so Bifrost stops reasoning once the history contains tool calls. This extension normalizes the provider request payload (inlet) so replayed history carries DeepSeek's reasoning_content.",
   "type": "module",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
-    "src"
+    "dist"
   ],
   "scripts": {
     "build": "tsc",
+    "prepublishOnly": "npm run build",
     "clean": "rm -rf dist",
     "typecheck": "tsc --noEmit",
     "verify": "node scripts/verify-fix.mjs",
@@ -25,7 +26,7 @@
   },
   "pi": {
     "extensions": [
-      "./src/index.ts"
+      "./dist/index.js"
     ]
   },
   "repository": {
