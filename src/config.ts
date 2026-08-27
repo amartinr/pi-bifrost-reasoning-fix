@@ -48,11 +48,6 @@ export interface Config {
    * there is no non-empty reasoning to replay.
    */
   forceReasoningContentOnTools: boolean;
-  /**
-   * Base URL of the Bifrost gateway (OpenAI-compatible /v1 endpoint). Used
-   * by tooling and diagnostics; informational only for the extension itself.
-   */
-  baseUrl: string;
   /** Log level for diagnostics. */
   logLevel: "off" | "error" | "info";
 }
@@ -61,7 +56,6 @@ export function loadConfig(): Config {
   const defaults: Config = {
     models: [],
     forceReasoningContentOnTools: true,
-    baseUrl: process.env.BIFROST_BASE_URL || "",
     logLevel: "off"
   };
 
@@ -92,9 +86,6 @@ export function loadConfig(): Config {
     }
     if (typeof config.forceReasoningContentOnTools !== "boolean") {
       throw new Error("'forceReasoningContentOnTools' must be a boolean");
-    }
-    if (typeof config.baseUrl !== "string") {
-      throw new Error("'baseUrl' must be a string");
     }
     const validLogLevels = ["off", "error", "info"];
     if (!validLogLevels.includes(config.logLevel)) {

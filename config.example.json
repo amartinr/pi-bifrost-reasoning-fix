@@ -1,5 +1,4 @@
 {
-  "baseUrl": "http://<bifrost-host>/v1",
   "models": ["deepseek/deepseek-v4-flash", "deepseek/deepseek-v4-pro"],
   "forceReasoningContentOnTools": true,
   "logLevel": "off"

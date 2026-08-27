@@ -104,7 +104,6 @@ with a warning.
 
 ```json
 {
-  "baseUrl": "http://<bifrost-host>/v1",
   "models": ["deepseek/deepseek-v4-flash", "deepseek/deepseek-v4-pro"],
   "forceReasoningContentOnTools": true,
   "logLevel": "off"
@@ -113,8 +112,6 @@ with a warning.
 
 | Key                        | Type   | Default | Description                                                            |
 |----------------------------|--------|---------|------------------------------------------------------------------------|
-| `baseUrl`                  | string | `""`   | Bifrost gateway base URL (OpenAI-compatible `/v1`) — informational;      |
-|                            |        |         | used by tooling and diagnostics. Falls back to `BIFROST_BASE_URL`.       |
 | `models`                   | string[] | `[]`  | Model IDs (or ID prefixes). Empty applies the fix to every request      |
 |                            | absent |         | that carries Bifrost residue.                                           |
 |                            | absent |         | that carries Bifrost residue.                                           |
@@ -129,8 +126,6 @@ payload in memory; pi itself performs the authenticated HTTP call using the
 `apiKey` and `headers` declared in `models.json`. The extension therefore
 never sees or forwards credentials, and no secret belongs in its config file.
 
-- `baseUrl` in `config.json` is informational (tooling/diagnostics), not used
-  to open a connection.
 - Never store an API key in the extension config file; keep it in
   `models.json` (or the environment) as pi expects.
 - If the extension ever calls Bifrost directly, use a configurable auth header
