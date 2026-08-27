@@ -40,6 +40,9 @@ npm-auth.token
 .DS_Store
 Thumbs.db
 
+# Local handoff/status notes
+NOTES.md
+
 # Coverage
 coverage/
 .nyc_output/
