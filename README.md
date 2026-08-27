@@ -38,6 +38,58 @@ and tolerates SSE comments (`: heartbeat`) and `data: [DONE]`. The drop occurs
 only when history is replayed on the inbound (request) side, which is what this
 fixes. No stream rewriting is required on the Pi path.
 
+## Configuration: models.json
+
+The extension does the inbound rewrite, so your `models.json` does not need
+hacks to work around the `reasoning` / `reasoning_details` dialect. It only
+needs a Bifrost provider whose models declare `reasoning: true` and a sensible
+`thinkingLevelMap` so the reasoning toggle works as expected.
+
+```json
+{
+  "providers": {
+    "bifrost": {
+      "baseUrl": "http://<bifrost-host>/v1",
+      "api": "openai-completions",
+      "apiKey": "<your-api-key>",
+      "compat": {
+        "supportsDeveloperRole": false,
+        "supportsReasoningEffort": true
+      },
+      "models": [
+        {
+          "id": "deepseek/deepseek-v4-flash",
+          "name": "DeepSeek V4 Flash (Bifrost)",
+          "reasoning": true,
+          "thinkingLevelMap": {
+            "minimal": null,
+            "low": "low",
+            "medium": null,
+            "high": "high",
+            "xhigh": "max"
+          },
+          "input": ["text"],
+          "contextWindow": 1000000,
+          "maxTokens": 384000
+        }
+      ]
+    }
+  }
+}
+```
+
+Notes:
+
+- `apiKey` is your Bifrost credential. Keep it in the file as normal for pi, but
+  never commit it — the key shown here is a placeholder.
+- `supportsReasoningEffort: true` lets pi forward the reasoning level from the
+  toggle.
+- `thinkingLevelMap.low` maps to the `low` effort level DeepSeek supports so the
+  toggle exposes all three levels (`low`, `high`, `max`). Omitted intermediate
+  levels (`minimal`, `medium`) stay hidden.
+- Any custom gateway headers (`bifrost.headers`) are deployment-specific; keep
+  them out of public documentation.
+
 ## Install
 
 Add to your Pi environment (placed in `~/.pi/agent/extensions/` for global
