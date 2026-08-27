@@ -90,6 +90,34 @@ Notes:
 - Any custom gateway headers (`bifrost.headers`) are deployment-specific; keep
   them out of public documentation.
 
+## Configuration
+
+Configuration is read from a JSON file checked at the extension's global config
+path:
+
+```
+~/.pi/agent/extensions/pi-bifrost-reasoning-fix/config.json
+```
+
+If the file is missing, defaults apply. An invalid file falls back to defaults
+with a warning.
+
+```json
+{
+  "models": ["deepseek/deepseek-v4-flash", "deepseek/deepseek-v4-pro"],
+  "forceReasoningContentOnTools": true,
+  "logLevel": "off"
+}
+```
+
+| Key                        | Type   | Default | Description                                                            |
+|----------------------------|--------|---------|------------------------------------------------------------------------|
+| `models`                   | string[] | `[]`  | Model IDs (or ID prefixes). Empty applies the fix to every request      |
+|                            | absent |         | that carries Bifrost residue.                                           |
+| `forceReasoningContentOnTools` | bool | `true` | Add an empty `reasoning_content` to assistant messages in tool-calling   |
+|                            |        |         | requests so DeepSeek keeps reasoning.                                    |
+| `logLevel`                 | string | `"off"` | `off` / `error` / `info` diagnostics to stderr.                          |
+
 ## Install
 
 Add to your Pi environment (placed in `~/.pi/agent/extensions/` for global
