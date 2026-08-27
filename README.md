@@ -133,12 +133,26 @@ never sees or forwards credentials, and no secret belongs in its config file.
 
 ## Install
 
-Add to your Pi environment (placed in `~/.pi/agent/extensions/` for global
-autodiscovery), or run from a trusted project:
+The package is not yet published to npm. Install it from source:
+
+Clone the repository (or copy it) into Pi's global extension directory:
 
 ```bash
-npm install @amartinr/pi-bifrost-reasoning-fix
+mkdir -p ~/.pi/agent/extensions
+cd ~/.pi/agent/extensions
+# clone from GitHub
+#   git clone git@github.com:amartinr/pi-bifrost-reasoning-fix.git
+# or copy an existing checkout into place:
+#   cp -r /path/to/pi-bifrost-reasoning-fix .
+
+cd pi-bifrost-reasoning-fix
+npm install
+npm run build
 ```
+
+Then reload Pi (`/reload`) so the extension is auto-discovered. Optionally
+place a `config.json` in the extension's config path (see
+[Configuration](#configuration)).
 
 ## Development
 
